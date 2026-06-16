@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\PurchasesExport;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\Response;
 
 class PurchaseController extends Controller
 {
@@ -85,11 +84,33 @@ class PurchaseController extends Controller
 
     public function export(Request $request)
     {
-        return Excel::download(new PurchasesExport($request->user()), 'compras.xlsx');
+        $purchases = $request->user()
+            ->purchases()
+            ->with('category')
+            ->latest('purchase_date')
+            ->get();
+
+        $total = $purchases->sum('amount');
+
+        $html = view('purchases.export', [
+            'purchases' => $purchases,
+            'total' => $total,
+        ])->render();
+
+        return response($html, Response::HTTP_OK, [
+            'Content-Type' => 'application/vnd.ms-excel; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="compras.xls"',
+            'Cache-Control' => 'max-age=0, no-cache, no-store, must-revalidate',
+            'Pragma' => 'public',
+        ]);
     }
 
     private function validatedData(Request $request): array
     {
+        $request->merge([
+            'amount' => preg_replace('/\D/', '', (string) $request->input('amount')),
+        ]);
+
         return $request->validate([
             'category_id' => [
                 'required',

@@ -17,7 +17,7 @@
             <div class="grid gap-4 sm:grid-cols-2">
                 <div class="rounded-lg border border-[#DDE7E1] bg-gradient-to-br from-[#0F623D] to-[#3E9B66] p-5 text-white">
                     <p class="text-sm text-white/80">Total gastado</p>
-                    <p class="mt-2 text-3xl font-semibold text-white">$ {{ number_format($totalSpent, 0, ',', '.') }}</p>
+                    <p class="mt-2 text-3xl font-semibold text-white">{{ \App\Support\Currency::cop($totalSpent) }}</p>
                 </div>
                 <div class="rounded-lg border border-[#DDE7E1] bg-white p-5">
                     <p class="text-sm text-gray-500">Numero de compras</p>
@@ -39,7 +39,7 @@
                                     <p class="font-medium text-gray-900">{{ $purchase->title }}</p>
                                     <p class="text-sm text-gray-500">{{ $purchase->category->name }} - {{ $purchase->purchase_date->format('Y-m-d') }}</p>
                                 </div>
-                                <p class="font-semibold text-gray-900">$ {{ number_format($purchase->amount, 0, ',', '.') }}</p>
+                                <p class="font-semibold text-gray-900">{{ $purchase->formatted_amount }}</p>
                             </div>
                         </a>
                     @empty

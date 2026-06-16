@@ -26,8 +26,8 @@
 
     <div>
         <label for="amount" class="block text-sm font-medium text-gray-700">Valor COP</label>
-        <input id="amount" type="number" step="1" min="0" name="amount" value="{{ old('amount', $purchase->amount ?? '') }}" placeholder="50000" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-900 focus:ring-gray-900">
-        <p class="mt-1 text-xs text-gray-500">Escribe el valor sin puntos ni comas. Ejemplo: 50000.</p>
+        <input id="amount" type="text" inputmode="numeric" name="amount" value="{{ old('amount', isset($purchase) ? number_format($purchase->amount, 0, ',', '.') : '') }}" placeholder="35.000" required data-cop-input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-900 focus:ring-gray-900">
+        <p class="mt-1 text-xs text-gray-500">Ejemplo: 35.000.</p>
         @error('amount') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
     </div>
 

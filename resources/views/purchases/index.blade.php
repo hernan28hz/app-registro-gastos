@@ -47,7 +47,7 @@
                                     </td>
                                     <td class="px-4 py-3 text-sm text-gray-600">{{ $purchase->category->name }}</td>
                                     <td class="px-4 py-3 text-sm text-gray-600">{{ $purchase->purchase_date->format('Y-m-d') }}</td>
-                                    <td class="px-4 py-3 text-right font-medium text-gray-900">$ {{ number_format($purchase->amount, 0, ',', '.') }}</td>
+                                    <td class="px-4 py-3 text-right font-medium text-gray-900">{{ $purchase->formatted_amount }}</td>
                                     <td class="px-4 py-3 text-right text-sm">
                                         <a href="{{ route('purchases.show', $purchase) }}" class="font-medium text-[#0A4D2E] hover:text-[#0F623D]">Ver</a>
                                         <a href="{{ route('purchases.edit', $purchase) }}" class="ms-3 font-medium text-[#0A4D2E] hover:text-[#0F623D]">Editar</a>

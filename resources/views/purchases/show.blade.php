@@ -16,7 +16,7 @@
                     </div>
                     <div>
                         <dt class="text-sm text-gray-500">Valor COP</dt>
-                        <dd class="mt-1 font-medium text-gray-900">$ {{ number_format($purchase->amount, 0, ',', '.') }}</dd>
+                        <dd class="mt-1 font-medium text-gray-900">{{ $purchase->formatted_amount }}</dd>
                     </div>
                     <div>
                         <dt class="text-sm text-gray-500">Fecha</dt>
